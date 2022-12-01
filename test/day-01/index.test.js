@@ -1,4 +1,4 @@
-const { totalCaloriesOfElf, day01Part01 } = require("../../lib/day-01");
+const { totalCaloriesOfElf, day01Part01, day01Part02 } = require("../../lib/day-01");
 const { testInput, actualInput } = require("../../lib/day-01/input");
 
 describe('day 01', () => {
@@ -20,6 +20,20 @@ describe('day 01', () => {
         const expected = 71924;
         const result = day01Part01(actualInput);
         
+        expect(result).toEqual(expected);
+    });
+
+    it('solves part 02 test', () => {
+        const expected = 45000;
+        const result = day01Part02(testInput);
+
+        expect(result).toEqual(expected);
+    });
+    
+    it('solves part 02', () => {
+        const expected = 210406;
+        const result = day01Part02(actualInput);
+
         expect(result).toEqual(expected);
     });
 });
