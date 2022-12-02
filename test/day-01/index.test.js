@@ -1,5 +1,5 @@
-const { calculateTotalCalories, day01Part01, day01Part02 } = require("../../lib/day-01");
-const { testInput, actualInput } = require("../../lib/day-01/input");
+const { calculateTotalCalories, day01Part01, day01Part02 } = require('../../lib/day-01');
+const { testInput, actualInput } = require('../../lib/day-01/input');
 
 describe('day 01', () => {
     it('takes an Elf string and calculates total calories', () => {
