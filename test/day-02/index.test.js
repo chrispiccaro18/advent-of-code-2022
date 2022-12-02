@@ -75,48 +75,6 @@ describe('day 02', () => {
         expect(result).toBe(12645);
     });
 
-    it('determines outcome of Z', () => {
-        const choices01 = 'C Z';
-        const result01 = determineOutcome(choices01);
-        expect(result01).toBe(6);
-        
-        const choices02 = 'A Z';
-        const result02 = determineOutcome(choices02);
-        expect(result02).toBe(6);
-        
-        const choices03 = 'B Z';
-        const result03 = determineOutcome(choices03);
-        expect(result03).toBe(6);
-    });
-    
-    it('determines outcome of X', () => {
-        const choices01 = 'C X';
-        const result01 = determineOutcome(choices01);
-        expect(result01).toBe(0);
-        
-        const choices02 = 'A X';
-        const result02 = determineOutcome(choices02);
-        expect(result02).toBe(0);
-        
-        const choices03 = 'B X';
-        const result03 = determineOutcome(choices03);
-        expect(result03).toBe(0);
-    });
-    
-    it('determines outcome of Y', () => {
-        const choices01 = 'C Y';
-        const result01 = determineOutcome(choices01);
-        expect(result01).toBe(3);
-        
-        const choices02 = 'A Y';
-        const result02 = determineOutcome(choices02);
-        expect(result02).toBe(3);
-        
-        const choices03 = 'B Y';
-        const result03 = determineOutcome(choices03);
-        expect(result03).toBe(3);
-    });
-
     it('calculates total score if opp uses rock', () => {
         const choices01 = 'A X';
         const result01 = calculateTotalScore(choices01);
