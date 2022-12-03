@@ -1,4 +1,4 @@
-const { day03Part01, stringToEqualArrays, findCommonCharacter, convertCharToPriority } = require('../../lib/day-03');
+const { day03Part01, stringToEqualArrays, findCommonCharacter, convertCharToPriority, day03Part02 } = require('../../lib/day-03');
 const { testInput, actualInput } = require('../../lib/day-03/input');
 
 describe('day 03', () => {
@@ -36,4 +36,8 @@ describe('day 03', () => {
         expect(result).toBe(7850);
     });
 
+    it('Solves the part02 test input', () => {
+        const result = day03Part02(testInput);
+        expect(result).toBe(70);
+    });
 });
