@@ -1,4 +1,4 @@
-const { day04part01, funk, day04part02, funk2 } = require('../../lib/day-04');
+const { day04part01, findRangesThatContain, day04part02, findRangesThatOverlap } = require('../../lib/day-04');
 const { testInput, actualInput } = require('../../lib/day-04/input');
 
 describe('day 04', () => {
@@ -9,7 +9,7 @@ describe('day 04', () => {
             [1, 7],
         ];
 
-        const result = funk(input);
+        const result = findRangesThatContain(input);
         expect(result).toBe(true);
         
         const input02 = [
@@ -17,7 +17,7 @@ describe('day 04', () => {
             [1, 7],
         ];
 
-        const result02 = funk(input02);
+        const result02 = findRangesThatContain(input02);
         expect(result02).toBe(true);
     });
 
@@ -33,14 +33,14 @@ describe('day 04', () => {
 
     it('identifies overlap', () => {
         const input = [
-            [["2", "4"], ["6", "8"]], 
-            [["2", "3"], ["4", "5"]], 
-            [["5", "7"], ["7", "9"]], 
-            [["2", "8"], ["3", "7"]], 
-            [["6", "6"], ["4", "6"]], 
-            [["2", "6"], ["4", "8"]]];
+            [['2', '4'], ['6', '8']], 
+            [['2', '3'], ['4', '5']], 
+            [['5', '7'], ['7', '9']], 
+            [['2', '8'], ['3', '7']], 
+            [['6', '6'], ['4', '6']], 
+            [['2', '6'], ['4', '8']]];
 
-        const result = input.map(funk2);
+        const result = input.map(findRangesThatOverlap);
         expect(result).toEqual([false, false, true, true, true, true]);
     });
 
