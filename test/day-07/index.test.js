@@ -1,4 +1,4 @@
-const { day07part01, calculateDirSize, calculateFilesInDir, changePath, mkDirTree } = require('../../lib/day-07');
+const { day07part01, calculateDirSize, calculateFilesInDir, changePath, mkDirTree, day07part02 } = require('../../lib/day-07');
 const { testInput, actualInput } = require('../../lib/day-07/input');
 
 const testDirTree = {
@@ -103,5 +103,15 @@ describe('day 07', () => {
     it('Solves the part01 actual input', () => {
         const result = day07part01(actualInput);
         expect(result).toBe(1391690);
+    });
+    
+    it('Solves the part02 test input', () => {
+        const result = day07part02(testInput);
+        expect(result).toBe(24933642);
+    });
+    
+    it('Solves the part02 actual input', () => {
+        const result = day07part02(actualInput);
+        expect(result).toBe(5469168);
     });
 });
