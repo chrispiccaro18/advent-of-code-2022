@@ -1,79 +1,107 @@
-const { day07part01, calculateDirSize, calculateFilesInDir } = require('../../lib/day-07');
+const { day07part01, calculateDirSize, calculateFilesInDir, changePath, mkDirTree } = require('../../lib/day-07');
 const { testInput, actualInput } = require('../../lib/day-07/input');
 
+const testDirTree = {
+    '/': {
+        name: '/',
+        path: '/',
+        children: ['/a', '/d'],
+        files: [
+            { name: 'b.txt', path: '/', size: 14848514 },
+            { name: 'c.dat', path: '/', size: 8504156 },
+        ]
+    },
+    '/a': {
+        name: 'a',
+        path: '/a',
+        children: ['/a/e'],
+        files: [
+            { name: 'f', path: '/a', size: 29116 },
+            { name: 'g', path: '/a', size: 2557 },
+            { name: 'h.lst', path: '/a', size: 62596 }
+        ]
+    },
+    '/d': { name: 'd', path: '/d', children: [], files: [
+        { name: 'j', path: '/d', size: 4060174 },
+        { name: 'd.log', path: '/d', size: 8033020 },
+        { name: 'd.ext', path: '/d', size: 5626152 },
+        { name: 'k', path: '/d', size: 7214296 },
+    ] },
+    '/a/e': { name: 'e', path: '/a/e', children: [], files: [
+        { name: 'i', path: '/a/e', size: 584 },
+    ] },
+};
+
 describe('day 07', () => {
+    it('changes path back one dir', () => {
+        const path = '/firstdir/seconddir';
+        const direction = '..';
+        const expected = '/firstdir';
+        const result = changePath(path, direction);
+        expect(result).toBe(expected);
+    });
+    
+    it('changes path back one dir to root', () => {
+        const path = '/firstdir';
+        const direction = '..';
+        const expected = '/';
+        const result = changePath(path, direction);
+        expect(result).toBe(expected);
+    });
+    
+    it('retains root path if going back', () => {
+        const path = '/';
+        const direction = '..';
+        const expected = '/';
+        const result = changePath(path, direction);
+        expect(result).toBe(expected);
+    });
+    
+    it('goes forward a dir at root', () => {
+        const path = '/';
+        const direction = 'firstdir';
+        const expected = '/firstdir';
+        const result = changePath(path, direction);
+        expect(result).toBe(expected);
+    });
+    
+    it('goes forward a dir', () => {
+        const path = '/firstdir';
+        const direction = 'seconddir';
+        const expected = '/firstdir/seconddir';
+        const result = changePath(path, direction);
+        expect(result).toBe(expected);
+    });
+    
+    it('creates dirTree', () => {
+        const input = testInput;
+        const expected = testDirTree;
+        const result = mkDirTree(input);
+        expect(result).toEqual(expected);
+    });
+
     it('Calculates file size in dir', () => {
-        const dir = {
-            name: 'd',
-            parent: '/',
-            children: [],
-            files: ['j', 'd.log', 'd.ext', 'k']
-        };
-        const files = {
-            'b.txt': { name: 'b.txt', parent: '/', size: 14848514 },
-            'c.dat': { name: 'c.dat', parent: '/', size: 8504156 },
-            f: { name: 'f', parent: 'a', size: 29116 },
-            g: { name: 'g', parent: 'a', size: 2557 },
-            'h.lst': { name: 'h.lst', parent: 'a', size: 62596 },
-            i: { name: 'i', parent: 'e', size: 584 },
-            j: { name: 'j', parent: 'd', size: 4060174 },
-            'd.log': { name: 'd.log', parent: 'd', size: 8033020 },
-            'd.ext': { name: 'd.ext', parent: 'd', size: 5626152 },
-            k: { name: 'k', parent: 'd', size: 7214296 }
-        };
-        const result = calculateFilesInDir(dir, files);
+        const currentDirTree = { ...testDirTree };
+        const dir = currentDirTree['/d'];
+        const result = calculateFilesInDir(dir);
         expect(result).toBe(24933642);
+        expect(dir.size).toBe(24933642);
     });
 
     it('Calculates directory sizes', () => {
-        const dir = {
-            name: 'a',
-            parent: '/',
-            children: [
-                'e',
-            ],
-            files: ['f', 'g', 'h.lst']
-        };
-
-        const dirTree = {
-            '/': { name: '/', children: ['a', 'd'], files: ['b.txt', 'c.dat'] },
-            files: {
-                'b.txt': { name: 'b.txt', parent: '/', size: 14848514 },
-                'c.dat': { name: 'c.dat', parent: '/', size: 8504156 },
-                f: { name: 'f', parent: 'a', size: 29116 },
-                g: { name: 'g', parent: 'a', size: 2557 },
-                'h.lst': { name: 'h.lst', parent: 'a', size: 62596 },
-                i: { name: 'i', parent: 'e', size: 584 },
-                j: { name: 'j', parent: 'd', size: 4060174 },
-                'd.log': { name: 'd.log', parent: 'd', size: 8033020 },
-                'd.ext': { name: 'd.ext', parent: 'd', size: 5626152 },
-                k: { name: 'k', parent: 'd', size: 7214296 }
-            },
-            a: {
-                name: 'a',
-                parent: '/',
-                children: ['e'],
-                files: ['f', 'g', 'h.lst']
-            },
-            d: {
-                name: 'd',
-                parent: '/',
-                children: [],
-                files: ['j', 'd.log', 'd.ext', 'k']
-            },
-            e: { name: 'e', parent: 'a', children: [], files: ['i'] }
-        };
-        const result = calculateDirSize(dir, dirTree);
+        const currentDirTree = { ...testDirTree };
+        const dir = currentDirTree['/a'];
+        const result = calculateDirSize(dir, currentDirTree);
         expect(result).toBe(94853);
     });
 
-    it.only('Solves the part01 test input', () => {
+    it('Solves the part01 test input', () => {
         const result = day07part01(testInput);
         expect(result).toBe(95437);
     });
     
-    it.only('Solves the part01 actual input', () => {
+    it('Solves the part01 actual input', () => {
         const result = day07part01(actualInput);
-        expect(result).toBe(1140);
+        expect(result).toBe(1391690);
     });
 });
