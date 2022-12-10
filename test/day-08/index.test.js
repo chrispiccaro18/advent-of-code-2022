@@ -1,4 +1,4 @@
-const { day08part01, calculateEdgeTrees, addEdgeTreesToMap, addVisibleTrees, flipGrid, addVisibleTreesOfColumns } = require('../../lib/day-08');
+const { day08part01, calculateEdgeTrees, addEdgeTreesToMap, addVisibleTrees, flipGrid, addVisibleTreesOfColumns, day08part02, checkRight, checkLeft } = require('../../lib/day-08');
 const { testInput, actualInput, expectedMap01, asymTrees, expectedMap02, expectedMap03, expectedFlippedGrid } = require('../../lib/day-08/input');
 
 describe('day 08', () => {
@@ -85,6 +85,64 @@ describe('day 08', () => {
     
     it('Solves the part01 actual input', () => {
         const result = day08part01(actualInput);
+        expect(result).toBe(1715);
+    });
+
+    it.only('Checks right', () => {
+        const treeRowsSplit = asymTrees.split('\n').map((row, rowIndex) => {
+            return row.split('').map((treeHeight, columnIndex) => ({
+                treeHeight: parseInt(treeHeight),
+                rowIndex,
+                columnIndex
+            }));
+        });
+        checkRight(treeRowsSplit[0], treeRowsSplit[0][3]);
+        expect(treeRowsSplit[0][3].rightCount).toBe(2);
+        
+        checkRight(treeRowsSplit[0], treeRowsSplit[0][5]);
+        expect(treeRowsSplit[0][5].rightCount).toBe(0);
+        
+        checkRight(treeRowsSplit[0], treeRowsSplit[0][0]);
+        expect(treeRowsSplit[0][0].rightCount).toBe(2);
+        
+        checkRight(treeRowsSplit[0], treeRowsSplit[0][1]);
+        expect(treeRowsSplit[0][1].rightCount).toBe(1);
+        
+        checkRight(treeRowsSplit[0], treeRowsSplit[0][4]);
+        expect(treeRowsSplit[0][4].rightCount).toBe(1);
+    });
+    
+    it.only('Checks left', () => {
+        const treeRowsSplit = asymTrees.split('\n').map((row, rowIndex) => {
+            return row.split('').map((treeHeight, columnIndex) => ({
+                treeHeight: parseInt(treeHeight),
+                rowIndex,
+                columnIndex
+            }));
+        });
+        checkLeft(treeRowsSplit[0], treeRowsSplit[0][3]);
+        expect(treeRowsSplit[0][3].leftCount).toBe(3);
+        
+        checkLeft(treeRowsSplit[0], treeRowsSplit[0][5]);
+        expect(treeRowsSplit[0][5].leftCount).toBe(1);
+        
+        checkLeft(treeRowsSplit[0], treeRowsSplit[0][0]);
+        expect(treeRowsSplit[0][0].leftCount).toBe(0);
+        
+        checkLeft(treeRowsSplit[0], treeRowsSplit[0][1]);
+        expect(treeRowsSplit[0][1].leftCount).toBe(1);
+        
+        checkLeft(treeRowsSplit[0], treeRowsSplit[0][2]);
+        expect(treeRowsSplit[0][2].leftCount).toBe(2);
+    });
+    
+    it('Solves the part02 test input', () => {
+        const result = day08part02(testInput);
+        expect(result).toBe(8);
+    });
+    
+    it('Solves the part01 actual input', () => {
+        const result = day08part02(actualInput);
         expect(result).toBe(1715);
     });
 });
