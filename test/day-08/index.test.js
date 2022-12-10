@@ -1,7 +1,7 @@
-const { day08part01, calculateEdgeTrees, addEdgeTreesToMap, addVisibleTrees, flipGrid, addVisibleTreesOfColumns, day08part02, checkRight, checkLeft } = require('../../lib/day-08');
+const { day08part01, calculateEdgeTrees, addEdgeTreesToMap, addVisibleTrees, flipGrid, addVisibleTreesOfColumns, day08part02, checkRight, checkLeft, checkDown, checkUp } = require('../../lib/day-08');
 const { testInput, actualInput, expectedMap01, asymTrees, expectedMap02, expectedMap03, expectedFlippedGrid } = require('../../lib/day-08/input');
 
-describe('day 08', () => {
+describe('day 09', () => {
     it('Calculates edge trees of tree grid', () => {
         const result = calculateEdgeTrees(testInput.split('\n'));
         expect(result).toBe(16);
@@ -88,7 +88,7 @@ describe('day 08', () => {
         expect(result).toBe(1715);
     });
 
-    it.only('Checks right', () => {
+    it('Checks right', () => {
         const treeRowsSplit = asymTrees.split('\n').map((row, rowIndex) => {
             return row.split('').map((treeHeight, columnIndex) => ({
                 treeHeight: parseInt(treeHeight),
@@ -112,7 +112,7 @@ describe('day 08', () => {
         expect(treeRowsSplit[0][4].rightCount).toBe(1);
     });
     
-    it.only('Checks left', () => {
+    it('Checks left', () => {
         const treeRowsSplit = asymTrees.split('\n').map((row, rowIndex) => {
             return row.split('').map((treeHeight, columnIndex) => ({
                 treeHeight: parseInt(treeHeight),
@@ -136,6 +136,39 @@ describe('day 08', () => {
         expect(treeRowsSplit[0][2].leftCount).toBe(2);
     });
     
+    it('Checks down', () => {
+        const treeRowsSplit = expectedFlippedGrid;
+        checkDown(treeRowsSplit[0], treeRowsSplit[0][0]);
+        expect(treeRowsSplit[0][0].downCount).toBe(2);
+        
+        checkDown(treeRowsSplit[0], treeRowsSplit[0][1]);
+        expect(treeRowsSplit[0][1].downCount).toBe(1);
+        
+        checkDown(treeRowsSplit[3], treeRowsSplit[3][0]);
+        expect(treeRowsSplit[3][0].downCount).toBe(4);
+        
+        checkDown(treeRowsSplit[2], treeRowsSplit[2][1]);
+        expect(treeRowsSplit[2][1].downCount).toBe(2);
+        
+        checkDown(treeRowsSplit[0], treeRowsSplit[0][4]);
+        expect(treeRowsSplit[0][4].downCount).toBe(0);
+    });
+    
+    it('Checks up', () => {
+        const treeRowsSplit = expectedFlippedGrid;
+        checkUp(treeRowsSplit[0], treeRowsSplit[0][0]);
+        expect(treeRowsSplit[0][0].upCount).toBe(0);
+        
+        checkUp(treeRowsSplit[0], treeRowsSplit[0][2]);
+        expect(treeRowsSplit[0][2].upCount).toBe(2);
+        
+        checkUp(treeRowsSplit[1], treeRowsSplit[1][4]);
+        expect(treeRowsSplit[1][4].upCount).toBe(2);
+        
+        checkUp(treeRowsSplit[3], treeRowsSplit[3][4]);
+        expect(treeRowsSplit[3][4].upCount).toBe(4);
+    });
+    
     it('Solves the part02 test input', () => {
         const result = day08part02(testInput);
         expect(result).toBe(8);
@@ -143,6 +176,6 @@ describe('day 08', () => {
     
     it('Solves the part01 actual input', () => {
         const result = day08part02(actualInput);
-        expect(result).toBe(1715);
+        expect(result).toBe(374400);
     });
 });
