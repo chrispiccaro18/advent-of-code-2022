@@ -1,7 +1,7 @@
 const { day08part01, calculateEdgeTrees, addEdgeTreesToMap, addVisibleTrees, flipGrid, addVisibleTreesOfColumns, day08part02, checkRight, checkLeft, checkDown, checkUp } = require('../../lib/day-08');
 const { testInput, actualInput, expectedMap01, asymTrees, expectedMap02, expectedMap03, expectedFlippedGrid } = require('../../lib/day-08/input');
 
-describe('day 09', () => {
+describe('day 08', () => {
     it('Calculates edge trees of tree grid', () => {
         const result = calculateEdgeTrees(testInput.split('\n'));
         expect(result).toBe(16);
