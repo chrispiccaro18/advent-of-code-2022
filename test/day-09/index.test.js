@@ -17,7 +17,7 @@ describe('day 09', () => {
         expect(result).toBe(1);
     });
     
-    it('Solves the part02 test input2', () => {
+    it.only('Solves the part02 test input2', () => {
         const result = day09part02(testInput2);
         expect(result).toBe(36);
     });
